@@ -1,16 +1,7 @@
 <template>
   <div class="container">
-    <h1>Cadastro de Usuário</h1>
-    <form @submit.prevent="enviarFormulario">
-      <div class="form-group">
-        <label for="nome">Nome</label>
-        <input
-          type="text"
-          id="nome"
-          class="form-control"
-          v-model="usuario.nome"
-        />
-      </div>
+    <h1>Login</h1>
+    <form @submit.prevent="efetuarLogin">
       <div class="form-group">
         <label for="email">E-mail</label>
         <input
@@ -29,7 +20,10 @@
           v-model="usuario.senha"
         />
       </div>
-      <button class="btn btn-primary">Salvar</button>
+      <button class="btn btn-primary btn-block">Login</button>
+      <router-link :to="{ name: 'novo.usuario' }">
+        Não possui um cadastro, cadastre-se aqui!
+      </router-link>
     </form>
   </div>
 </template>
@@ -38,21 +32,17 @@
 export default {
   data() {
     return {
-      usuario: {
-        nome: "",
-        senha: "",
-        email: "",
-      },
+      usuario: {},
     };
   },
   methods: {
-    enviarFormulario() {
-      console.log(this.usuario);
+    efetuarLogin() {
       this.$http
-        .post("auth/register", this.usuario)
+        .post("auth/login", this.usuario)
         .then((resposta) => {
           console.log(resposta);
-          this.$router.push({name: 'login'});
+          localStorage.setItem("token", resposta.data.access_token);
+          this.$router.push({ name: "gerentes" });
         })
         .catch((erro) => console.log(erro));
     },
