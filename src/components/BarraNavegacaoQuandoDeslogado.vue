@@ -12,12 +12,7 @@
 </template>
 
 <script>
-export default {
-  methods: {
-    efetuarLogout() {
-      localStorage.removeItem("token");
-      this.$router.push({ name: "login" });
-    },
-  },
+export default {  
+ 
 };
 </script>

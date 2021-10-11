@@ -37,14 +37,8 @@ export default {
   },
   methods: {
     efetuarLogin() {
-      this.$http
-        .post("auth/login", this.usuario)
-        .then((resposta) => {
-          console.log(resposta);
-          localStorage.setItem("token", resposta.data.access_token);
-          this.$router.push({ name: "gerentes" });
-        })
-        .catch((erro) => console.log(erro));
+      this.$store.dispatch('efetuarLogin', this.usuario)
+      .then(() => this.$router.push({name: 'gerentes'}))
     },
   },
 };

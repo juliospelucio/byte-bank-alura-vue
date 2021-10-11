@@ -1,4 +1,5 @@
 import axios from 'axios'
+import provedor from "@/provedor";
 
 const http = axios.create({
     baseURL: "http://localhost:8000/",
@@ -9,14 +10,14 @@ const http = axios.create({
 })
 
 http.interceptors.request.use(
-    function (config) {
-        const token = localStorage.getItem('token')
+    function(config) {
+        const token = provedor.state.token
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
     },
-    function (erro) {
+    function(erro) {
         Promise.reject(erro)
     }
 )
